@@ -3,14 +3,9 @@ using System.Data.SqlClient;
 using Mood.Model;
 using Mood.Services;
 
-public class MoodService : IMoodService
+public class MoodService(IConfiguration configuration) : IMoodService
 {
-    private readonly string _connectionString;
-
-    public MoodService(IConfiguration configuration)
-    {
-        _connectionString = configuration.GetConnectionString("DefaultConnection");
-    }
+    private readonly string _connectionString = configuration.GetConnectionString("DefaultConnection");
 
     public int AddMoodEntry(int userId, MoodEntryDto entry)
     {
@@ -21,7 +16,7 @@ public class MoodService : IMoodService
         command.Parameters.AddWithValue("@UserId", userId);
         command.Parameters.AddWithValue("@Mood", entry.Mood);
         command.Parameters.AddWithValue("@JournalText", entry.JournalText ?? (object)DBNull.Value);
-        command.Parameters.AddWithValue("@EntryDate", entry.EntryDate);
+        command.Parameters.AddWithValue("@EntryDate", entry.EntryDate); 
 
         connection.Open();
         return Convert.ToInt32(command.ExecuteScalar());
@@ -32,7 +27,7 @@ public class MoodService : IMoodService
         throw new NotImplementedException();
     }
 
-    public List<MoodEntry> GetMoodEntriesByDateRange(int userId, DateOnly startDate, DateOnly endDate)
+    public List<MoodEntry> GetMoodEntriesByDateRange(int userId, DateTime startDate, DateTime endDate)
     {
         var entries = new List<MoodEntry>();
 
@@ -54,13 +49,13 @@ public class MoodService : IMoodService
                 UserId = Convert.ToInt32(reader["UserId"]),
                 Mood = reader["Mood"].ToString(),
                 JournalText = reader["JournalText"].ToString(),
-                EntryDate = DateOnly.FromDateTime(Convert.ToDateTime(reader["EntryDate"]))
+                EntryDate = Convert.ToDateTime(reader["EntryDate"]) // ✅ Reader returns DateTime
             });
         }
         return entries;
     }
 
-    public List<MoodStatsDto> GetMoodStats(int userId, DateOnly startDate, DateOnly endDate)
+    public List<MoodStatsDto> GetMoodStats(int userId, DateTime startDate, DateTime endDate)
     {
         var stats = new List<MoodStatsDto>();
 
@@ -86,7 +81,7 @@ public class MoodService : IMoodService
         return stats;
     }
 
-    List<MoodEntryDto> IMoodService.GetMoodEntriesByDateRange(int userId, DateOnly startDate, DateOnly endDate)
+    List<MoodEntryDto> IMoodService.GetMoodEntriesByDateRange(int userId, DateTime startDate, DateTime endDate)
     {
         throw new NotImplementedException();
     }

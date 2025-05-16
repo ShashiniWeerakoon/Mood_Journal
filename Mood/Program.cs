@@ -4,7 +4,7 @@ using Mood.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddScoped<IMoodService, MoodService>();
+builder.Services.AddScoped<IMoodService,MoodService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

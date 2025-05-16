@@ -30,7 +30,7 @@ namespace Mood.Controllers
         }
 
         [HttpGet("history")]
-        public IActionResult History([FromQuery] int userId, [FromQuery] DateOnly startDate, [FromQuery] DateOnly endDate)
+        public IActionResult History([FromQuery] int userId, [FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace Mood.Controllers
         }
 
         [HttpGet("stats")]
-        public IActionResult Stats([FromQuery] int userId, [FromQuery] DateOnly startDate, [FromQuery] DateOnly endDate)
+        public IActionResult Stats([FromQuery] int userId, [FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
         {
             try
             {

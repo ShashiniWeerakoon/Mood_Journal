@@ -1,0 +1,21 @@
+<div class="app-container">
+  <app-loading-spinner></app-loading-spinner>
+  
+  <header>
+    <h1>{{ title }}</h1>
+    <nav class="main-nav">
+      <a routerLink="/mood-entry" routerLinkActive="active">Record Mood</a>
+      <a routerLink="/mood-history" routerLinkActive="active">View History</a>
+      <a routerLink="/mood-stats" routerLinkActive="active">Mood Stats</a>
+    </nav>
+  </header>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer>
+    <p>© 2025 Mood Tracker - Your daily mood journal</p>
+  </footer>
+</div>
+

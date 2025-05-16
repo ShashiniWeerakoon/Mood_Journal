@@ -5,6 +5,6 @@
         public int UserId { get; set; }
         public required string Mood { get; set; }
         public required string JournalText { get; set; }
-        public DateOnly EntryDate { get; set; }
+        public DateTime EntryDate { get; set; }
     }
 }

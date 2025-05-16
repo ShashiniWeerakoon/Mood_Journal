@@ -6,6 +6,6 @@
         public int UserId { get; set; }               // FK to Users
         public required string Mood { get; set; } 
         public string? JournalText { get; set; }
-        public DateOnly EntryDate { get; set; }
+        public DateTime EntryDate { get; set; }
     }
 }
