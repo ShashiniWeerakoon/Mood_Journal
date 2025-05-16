@@ -21,11 +21,11 @@ namespace Mood.Controllers
             try
             {
                 var newId = _moodService.AddMoodEntry(entry);
-                return Ok(new { EntryId = newId });
+                return Ok(new { Message = "Mood entry added successfully", EntryId = newId });
             }
-            catch
+            catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while adding the mood entry.");
+                return StatusCode(500, $"Error: {ex.Message}");
             }
         }
 
@@ -37,9 +37,9 @@ namespace Mood.Controllers
                 var entries = _moodService.GetMoodEntriesByDateRange(userId, startDate, endDate);
                 return Ok(entries);
             }
-            catch
+            catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while retrieving mood history.");
+                return StatusCode(500, $"Error: {ex.Message}");
             }
         }
 
@@ -51,9 +51,9 @@ namespace Mood.Controllers
                 var stats = _moodService.GetMoodStats(userId, startDate, endDate);
                 return Ok(stats);
             }
-            catch
+            catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while retrieving mood stats.");
+                return StatusCode(500, $"Error: {ex.Message}");
             }
         }
     }
