@@ -1,37 +1,40 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
-
-
+import { FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { MoodEntryComponent } from './components/mood-entry/mood-entry.component';
-import { MoodHistoryComponent } from './components/mood-entry/mood-history/mood-history.component';
-import { LoadingSpinnerComponent } from './components/mood-entry/Loading-spinner/loading-spinner.component';
-import { MoodStatsComponent } from './components/mood-entry/mood-stats/mood-stats.component';
-import { LoadingInterceptor } from './interceptors/loading.interceptor';
-import { routes } from './app.routes';
+import { LoginComponent } from './pages/login/login.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { HistoryComponent } from './pages/history/history.component';
+import { StatsComponent } from './pages/stats/stats.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component'; 
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component'; 
+import { AppRoutingModule } from './app.routes';
+
+const routes: Routes = [
+  { path: '', component: LoginComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'history', component: HistoryComponent },
+  { path: 'stats', component: StatsComponent }
+];
 
 @NgModule({
   declarations: [
     AppComponent,
-    MoodEntryComponent,
-    MoodHistoryComponent,
-    LoadingSpinnerComponent,
-    MoodStatsComponent
+    LoginComponent,
+    DashboardComponent,
+    HistoryComponent,
+    StatsComponent,
+    SidebarComponent,         
+    LoadingSpinnerComponent     
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
+    AppRoutingModule,
     RouterModule.forRoot(routes)
-  ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
