@@ -1,8 +1,12 @@
-// src/app/dashboard/dashboard.component.ts
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { LoadingSpinnerComponent } from '../../components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-dashboard',
+  standalone: true,
+  imports: [CommonModule, FormsModule, LoadingSpinnerComponent],
   templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent {

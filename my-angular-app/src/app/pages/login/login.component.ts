@@ -1,41 +1,41 @@
-// login.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
 import { LoadingSpinnerComponent } from '../../components/loading-spinner/loading-spinner.component';
-
-import { ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [CommonModule, FormsModule, LoadingSpinnerComponent],
   templateUrl: './login.component.html',
   
+  standalone: true,
+  imports: [CommonModule, FormsModule, LoadingSpinnerComponent]
 })
 export class LoginComponent {
   username: string = '';
   password: string = '';
+  error: string = '';
   isLoading: boolean = false;
-  errorMessage: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private router: Router) {}
 
-  onSubmit() {
+  login(): void {
+    if (!this.username || !this.password) {
+      this.error = 'Please enter both username and password';
+      return;
+    }
+
     this.isLoading = true;
-    this.errorMessage = '';
-    
+    this.error = '';
+
+    // Simple mock authentication
     setTimeout(() => {
-      const isAuthenticated = this.authService.login(this.username, this.password);
-      this.isLoading = false;
-      
-      if (isAuthenticated) {
+      if (this.username === 'admin' && this.password === '1234') {
         this.router.navigate(['/dashboard']);
       } else {
-        this.errorMessage = 'Invalid username or password';
+        this.error = 'Invalid username or password';
       }
+      this.isLoading = false;
     }, 1000);
   }
 }

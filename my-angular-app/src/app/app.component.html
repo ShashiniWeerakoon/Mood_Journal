@@ -1,14 +1,6 @@
-<!-- src/app/app.component.html -->
-<ng-container *ngIf="isLoginPage; else mainLayout">
-  <router-outlet></router-outlet>
-</ng-container>
-
-<ng-template #mainLayout>
-  <div class="d-flex">
-    <app-sidebar></app-sidebar>
-    <div class="flex-grow-1">
-      <router-outlet></router-outlet>
-      <app-login></app-login>
-    </div>
+<div class="app-container">
+  <app-sidebar *ngIf="shouldShowSidebar"></app-sidebar>
+  <div class="content-area" [ngClass]="{'with-sidebar': shouldShowSidebar}">
+    <router-outlet></router-outlet>
   </div>
-</ng-template>
+</div>
