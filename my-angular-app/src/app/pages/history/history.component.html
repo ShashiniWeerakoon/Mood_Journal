@@ -1,48 +1,49 @@
-<div class="d-flex flex-column min-vh-100 " style="background-color: #fafcec;">
+<div class="d-flex flex-column min-vh-100" style="background-color: #fafcec;">
   <div class="container py-4 mt-3" style="max-width: 1000px;">
 
     <h3 class="fw-bold mb-3">📜 Mood History</h3>
 
-   <form (ngSubmit)="fetchHistory()">
-    <div class="row mb-3">
-      <div class="col-md-4">
-        <label>User ID</label>
-        <div class="input-group">
-          <span class="input-group-text" style="background-color: #fafcec; border: 1px solid #ced4da;">
-            <i class="bi bi-person-badge"></i>
-          </span>
-          <input type="text" class="form-control" [(ngModel)]="userId" name="userId" required
-            style="background-color: #fafcec; border: 1px solid #ced4da;">
+    <form (ngSubmit)="fetchHistory()">
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label>User ID</label>
+          <div class="input-group">
+            <span class="input-group-text" style="background-color: #fafcec; border: 1px solid #ced4da;">
+              <i class="bi bi-person-badge"></i>
+            </span>
+            <input type="text" class="form-control" [(ngModel)]="userId" name="userId" required
+              style="background-color: #fafcec; border: 1px solid #ced4da;">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label>Start Date</label>
+          <div class="input-group">
+            <span class="input-group-text" style="background-color: #fafcec; border: 1px solid #ced4da;">
+              <i class="bi bi-calendar-date"></i>
+            </span>
+            <input type="date" class="form-control" [(ngModel)]="startDate" name="startDate" required
+              style="background-color: #fafcec; border: 1px solid #ced4da;">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label>End Date</label>
+          <div class="input-group">
+            <span class="input-group-text" style="background-color: #fafcec; border: 1px solid #ced4da;">
+              <i class="bi bi-calendar-date"></i>
+            </span>
+            <input type="date" class="form-control" [(ngModel)]="endDate" name="endDate" required
+              style="background-color: #fafcec; border: 1px solid #ced4da;">
+          </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <label>Start Date</label>
-        <div class="input-group">
-          <span class="input-group-text" style="background-color: #fafcec; border: 1px solid #ced4da;">
-            <i class="bi bi-calendar-date"></i>
-          </span>
-          <input type="date" class="form-control" [(ngModel)]="startDate" name="startDate" required
-            style="background-color: #fafcec; border: 1px solid #ced4da;">
-        </div>
-      </div>
-      <div class="col-md-4">
-        <label>End Date</label>
-        <div class="input-group">
-          <span class="input-group-text" style="background-color: #fafcec; border: 1px solid #ced4da;">
-            <i class="bi bi-calendar-date-fill"></i>
-          </span>
-          <input type="date" class="form-control" [(ngModel)]="endDate" name="endDate" required
-            style="background-color: #fafcec; border: 1px solid #ced4da;">
-        </div>
-      </div>
-    </div>
 
-    <div class="text-end">
-      <button type="submit" class="btn btn-warning" [disabled]="loading">
-        <i class="bi bi-eye"></i> View
-      </button>
-    </div>
-  </form>
+      <div class="text-end">
+        <button type="submit" class="btn btn-warning" [disabled]="loading">
+          <i class="bi bi-eye"></i> View
+        </button>
+      </div>
+    </form>
+
     <hr class="my-4">
 
     <div *ngIf="history.length > 0">
@@ -54,6 +55,7 @@
               <th>Entry Date</th>
               <th>Mood</th>
               <th>Journal Text</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -61,6 +63,11 @@
               <td>{{ entry.entryDate }}</td>
               <td>{{ entry.mood }}</td>
               <td>{{ entry.journalText }}</td>
+              <td class="text-center">
+                <button class="btn btn-outline-danger btn-sm" (click)="deleteEntry(entry)" title="Delete">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
