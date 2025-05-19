@@ -4,6 +4,7 @@
 
     <form (ngSubmit)="fetchStats()">
       <div class="row mb-3">
+        <!-- User ID -->
         <div class="col-md-4">
           <label>User ID</label>
           <div class="input-group">
@@ -14,6 +15,8 @@
               style="background-color: #fafcec; border: 1px solid #ced4da;">
           </div>
         </div>
+
+        <!-- Start Date -->
         <div class="col-md-4">
           <label>Start Date</label>
           <div class="input-group">
@@ -24,13 +27,15 @@
               style="background-color: #fafcec; border: 1px solid #ced4da;">
           </div>
         </div>
+
+        <!-- End Date -->
         <div class="col-md-4">
           <label>End Date</label>
           <div class="input-group">
             <span class="input-group-text" style="background-color: #fafcec; border: 1px solid #ced4da;">
               <i class="bi bi-calendar-date"></i>
             </span>
-            <input type="date" class="form-control" [(ngModel)]="endDate" name="endDate" required
+            <input type="date" class="form-control" [(ngModel)]="endDate" name="endDate" [max]="maxDate" (change)="onEndDateChange()" required
               style="background-color: #fafcec; border: 1px solid #ced4da;">
           </div>
         </div>
@@ -45,7 +50,13 @@
 
     <hr class="my-4">
 
-    <div *ngIf="stats.length > 0">
+    <!-- 🌀 Spinner shown while loading -->
+    <div *ngIf="loading" class="text-center my-4">
+      <app-loading-spinner></app-loading-spinner>
+      <p class="text-muted">Loading mood Stats...</p>
+    </div>
+
+    <div *ngIf="stats.length > 0 && !loading">
       <h5 class="mb-3">Mood Counts:</h5>
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
@@ -65,7 +76,7 @@
       </div>
     </div>
 
-    <div *ngIf="stats.length === 0 && submitted">
+    <div *ngIf="stats.length === 0 && submitted && !loading">
       <p class="text-muted mt-3">No mood stats found for the selected range.</p>
     </div>
   </div>

@@ -6,6 +6,6 @@ import { NgClass, NgIf } from '@angular/common';
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, NgClass, NgIf]
+  imports: [RouterLink, RouterLinkActive]
 })
 export class SidebarComponent {}

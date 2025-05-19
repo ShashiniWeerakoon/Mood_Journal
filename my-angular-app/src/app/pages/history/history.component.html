@@ -46,7 +46,14 @@
 
     <hr class="my-4">
 
-    <div *ngIf="history.length > 0">
+    <!-- 🌀 Spinner shown while loading -->
+    <div *ngIf="loading" class="text-center my-4">
+      <app-loading-spinner></app-loading-spinner>
+      <p class="text-muted">Loading mood history...</p>
+    </div>
+
+    <!-- ✅ Data shown after loading -->
+    <div *ngIf="!loading && history.length > 0">
       <h5 class="mb-3">Results:</h5>
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
@@ -74,7 +81,8 @@
       </div>
     </div>
 
-    <div *ngIf="history.length === 0 && submitted">
+    <!-- ❌ No data case -->
+    <div *ngIf="!loading && history.length === 0 && submitted">
       <p class="text-muted mt-3">No mood entries found for the selected range.</p>
     </div>
 

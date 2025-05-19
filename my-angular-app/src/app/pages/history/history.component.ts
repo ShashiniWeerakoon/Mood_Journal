@@ -1,20 +1,22 @@
-// filepath: d:\company\New\Mood\my-angular-app\src\app\pages\history\history.component.ts
+// filepath: src/app/pages/history/history.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MoodService, MoodEntry } from '../../services/mood.service';
+import { LoadingSpinnerComponent } from '../../components/loading-spinner/loading-spinner.component';
+
 
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, LoadingSpinnerComponent] // Add SpinnerComponent here
 })
 export class HistoryComponent implements OnInit {
   userId: string = '';
   startDate: string = '';
   endDate: string = '';
-
+  maxDate!: string;
   history: MoodEntry[] = [];
   loading: boolean = false;
   submitted: boolean = false;
@@ -24,13 +26,21 @@ export class HistoryComponent implements OnInit {
   constructor(private moodService: MoodService) {}
 
   ngOnInit(): void {
-    // Set default dates for the current month
     const today = new Date();
-    const formatted = today.toISOString().split('T')[0];
-    this.startDate = formatted;
-    this.endDate = formatted;
-    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-    this.startDate = firstDay.toISOString().split('T')[0];
+    this.maxDate = today.toISOString().split('T')[0];
+    this.endDate = this.maxDate;
+    this.startDate = this.maxDate;
+  }
+
+  onEndDateChange(): void {
+    if (!this.isEndDateValid()) {
+      this.endDate = this.maxDate;
+    }
+  }
+
+  isEndDateValid(): boolean {
+    if (!this.endDate) return true;
+    return new Date(this.endDate) <= new Date(this.maxDate);
   }
 
   fetchHistory(): void {
@@ -39,7 +49,6 @@ export class HistoryComponent implements OnInit {
     this.isError = false;
     this.errorMessage = '';
 
-    // Validate userId
     if (!this.userId || !this.startDate || !this.endDate) {
       this.isError = true;
       this.errorMessage = 'Please fill all required fields';
@@ -55,7 +64,6 @@ export class HistoryComponent implements OnInit {
       return;
     }
 
-    // Call the service to get entries
     this.moodService.getMoodEntriesByDateRange(userIdNumber, this.startDate, this.endDate)
       .subscribe({
         next: (entries: MoodEntry[]) => {
@@ -65,7 +73,8 @@ export class HistoryComponent implements OnInit {
         error: (err) => {
           console.error('Error fetching mood history:', err);
           this.isError = true;
-          
+          this.loading = false;
+
           if (err.status === 0) {
             this.errorMessage = 'Cannot connect to the server. Please check if the backend is running.';
           } else if (err.status === 404) {
@@ -73,18 +82,11 @@ export class HistoryComponent implements OnInit {
           } else {
             this.errorMessage = 'Failed to load history: ' + (err.error?.message || err.message || 'Unknown error');
           }
-          
-          this.loading = false;
         }
       });
   }
 
   deleteEntry(entryToDelete: any): void {
-  this.history = this.history.filter(entry => entry !== entryToDelete);
+    this.history = this.history.filter(entry => entry !== entryToDelete);
+  }
 }
-
-  
-  
-    }
-  
-
