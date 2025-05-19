@@ -1,1 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
+.nav-link.active {
+  background-color: #ffc107 !important;  /* Same as login button */
+  color: black !important;               /* Optional: ensures good contrast */
+  font-weight: bold;
+}

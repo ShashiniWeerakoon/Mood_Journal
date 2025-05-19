@@ -10,14 +10,12 @@ import { LoadingSpinnerComponent } from '../../components/loading-spinner/loadin
   templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent {
-  moodEntry = {
-    userId: '',
-    userName: '',
-    email: '',
-    date: '',
-    mood: '',
-    journal: ''
-  };
+  userId: string = '';
+  userName: string = '';
+  email: string = '';
+  entryDate: string = new Date().toISOString().split('T')[0]; // Today's date
+  mood: string = '';
+  journalText: string = '';
 
   submitting = false;
 
@@ -26,25 +24,20 @@ export class DashboardComponent {
     setTimeout(() => {
       this.submitting = false;
       alert('Mood entry submitted successfully!');
-      this.moodEntry = {
-        userId: '',
-        userName: '',
-        email: '',
-        date: '',
-        mood: '',
-        journal: ''
-      };
+      this.resetForm();
     }, 1500); // Simulated loading
   }
 
   onCancel() {
-    this.moodEntry = {
-      userId: '',
-      userName: '',
-      email: '',
-      date: '',
-      mood: '',
-      journal: ''
-    };
+    this.resetForm();
+  }
+
+  resetForm() {
+    this.userId = '';
+    this.userName = '';
+    this.email = '';
+    this.entryDate = new Date().toISOString().split('T')[0];
+    this.mood = '';
+    this.journalText = '';
   }
 }

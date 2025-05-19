@@ -3,11 +3,13 @@ import { provideRouter, withDebugTracing } from '@angular/router';
 import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes, withDebugTracing()), // Add debug tracing to see routing events
+    provideRouter(routes, withDebugTracing()),
     provideAnimations(),
-    provideHttpClient()
+    provideHttpClient(),
+    { provide: LocationStrategy, useClass: HashLocationStrategy } // Use hash-based routing
   ]
 };

@@ -1,4 +1,75 @@
-<app-sidebar></app-sidebar>
-<div class="p-4">
-  <h2>History Page</h2>
+<div class="d-flex flex-column min-vh-100 " style="background-color: #fafcec;">
+  <div class="container py-4 mt-3" style="max-width: 1000px;">
+
+    <h3 class="fw-bold mb-3">📜 Mood History</h3>
+
+   <form (ngSubmit)="fetchHistory()">
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label>User ID</label>
+        <div class="input-group">
+          <span class="input-group-text" style="background-color: #fafcec; border: 1px solid #ced4da;">
+            <i class="bi bi-person-badge"></i>
+          </span>
+          <input type="text" class="form-control" [(ngModel)]="userId" name="userId" required
+            style="background-color: #fafcec; border: 1px solid #ced4da;">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label>Start Date</label>
+        <div class="input-group">
+          <span class="input-group-text" style="background-color: #fafcec; border: 1px solid #ced4da;">
+            <i class="bi bi-calendar-date"></i>
+          </span>
+          <input type="date" class="form-control" [(ngModel)]="startDate" name="startDate" required
+            style="background-color: #fafcec; border: 1px solid #ced4da;">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label>End Date</label>
+        <div class="input-group">
+          <span class="input-group-text" style="background-color: #fafcec; border: 1px solid #ced4da;">
+            <i class="bi bi-calendar-date-fill"></i>
+          </span>
+          <input type="date" class="form-control" [(ngModel)]="endDate" name="endDate" required
+            style="background-color: #fafcec; border: 1px solid #ced4da;">
+        </div>
+      </div>
+    </div>
+
+    <div class="text-end">
+      <button type="submit" class="btn btn-warning" [disabled]="loading">
+        <i class="bi bi-eye"></i> View
+      </button>
+    </div>
+  </form>
+    <hr class="my-4">
+
+    <div *ngIf="history.length > 0">
+      <h5 class="mb-3">Results:</h5>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead class="table-warning">
+            <tr>
+              <th>Entry Date</th>
+              <th>Mood</th>
+              <th>Journal Text</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let entry of history">
+              <td>{{ entry.entryDate }}</td>
+              <td>{{ entry.mood }}</td>
+              <td>{{ entry.journalText }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div *ngIf="history.length === 0 && submitted">
+      <p class="text-muted mt-3">No mood entries found for the selected range.</p>
+    </div>
+
+  </div>
 </div>

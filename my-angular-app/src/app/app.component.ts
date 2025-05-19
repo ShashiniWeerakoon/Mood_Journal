@@ -1,36 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, SidebarComponent, CommonModule],
-  templateUrl: './app.component.html',
- 
+  imports: [RouterOutlet, CommonModule],
+  template: `
+    <!-- Simplified template with just the router outlet -->
+    <router-outlet></router-outlet>
+  `
 })
-export class AppComponent implements OnInit {
-  shouldShowSidebar = false;
-  
-  constructor(private router: Router) {}
-
-  ngOnInit() {
-    // Check current route when component initializes
-    this.updateSidebarVisibility(this.router.url);
-    
-    // Listen for route changes
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: any) => {
-      this.updateSidebarVisibility(event.url);
-    });
-  }
-  
-  private updateSidebarVisibility(url: string) {
-    // Hide sidebar on login page
-    this.shouldShowSidebar = !url.includes('/login');
-    console.log('Current URL:', url, 'Show sidebar:', this.shouldShowSidebar);
-  }
+export class AppComponent {
+  // Simplified component with no logic to prevent routing issues
 }
